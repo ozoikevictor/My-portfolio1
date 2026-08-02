@@ -1,100 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <script src="https://kit.fontawesome.com/ea50b68e1f.js" crossorigin="anonymous"></script>
-        <title>My Portfolio</title>
-        <link rel="icon" href="../images/victor image.png">
-    </head>
-    <body>
-        <!-- header path -->
-        <header>
-            <section>
-                <div>
-                    <a href="../index.html">
-                        <div><img height="72" width="50" src="../images/victor image.png" /></div>
-                    </a>
-                    <nav>
-                        <li>
-                        <li><a href="home.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="skill.html">Skills</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        </li>
-                    </nav>
-                </div>
-            </section>
-        </header>
-        <!-- main -->
-        <main>
-            <div>
-                <h5>portfolio</h5>
-                 <a href="home.html">
-                   <P>Home</a> >> portfolio</P> 
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Apply saved theme, accent colour, font size, and animation
+        // preference immediately, before anything paints — avoids any
+        // flash of default settings on load.
+        (function () {
+            var root = document.documentElement;
+
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            if (theme === 'light') root.setAttribute('data-theme', 'light');
+
+            var savedAccent = localStorage.getItem('accentColor');
+            if (savedAccent) root.style.setProperty('--color-accent', savedAccent);
+
+            var savedFontScale = localStorage.getItem('fontScale');
+            if (savedFontScale) root.style.fontSize = savedFontScale + '%';
+
+            if (localStorage.getItem('animationsEnabled') === 'false') {
+                root.classList.add('no-animations');
+            }
+        })();
+    </script>
+    <script src="https://kit.fontawesome.com/ea50b68e1f.js" crossorigin="anonymous"></script>
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../images/victor image.png">
+</head>
+
+<body>
+    <!-- LOADING SCREEN -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="../images/victor image.png" alt="" class="loading-logo" aria-hidden="true">
+        <div class="loading-bar"><span></span></div>
+    </div>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="../images/victor image.png" alt="Victor Logo" class="logo-img">
+            </a>
+            <nav class="navbar">
+                <ul class="nav-links" id="navLinks">
+                    <li class="nav-item"><a href="home.html" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="skill.html" class="nav-link">Skills</a></li>
+                    <li class="nav-item"><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="settings-btn" id="settingsBtn" type="button" aria-label="Open settings" aria-expanded="false"
+                aria-controls="settingsPanel">
+                <i class="fa-solid fa-gear" aria-hidden="true"></i>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- SETTINGS OVERLAY + SIDEBAR -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+
+    <aside class="settings-panel" id="settingsPanel" aria-hidden="true" aria-label="Site settings">
+
+        <div class="settings-panel__header">
+            <h3>Settings</h3>
+            <button class="settings-panel__close" id="settingsClose" type="button" aria-label="Close settings">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> Dark / Light Mode</h4>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark and light mode"
+                aria-pressed="false">
+                <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                <i class="fa-solid fa-sun" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-palette" aria-hidden="true"></i> Accent Colour</h4>
+            <div class="accent-swatches" id="accentSwatches">
+                <button class="accent-swatch active" type="button" data-accent="#FF6C37" style="--swatch:#FF6C37"
+                    aria-label="Orange accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#4C6FFF" style="--swatch:#4C6FFF"
+                    aria-label="Blue accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#2ECC71" style="--swatch:#2ECC71"
+                    aria-label="Green accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#E64980" style="--swatch:#E64980"
+                    aria-label="Pink accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#9B59B6" style="--swatch:#9B59B6"
+                    aria-label="Purple accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#F1C40F" style="--swatch:#F1C40F"
+                    aria-label="Yellow accent"></button>
             </div>
-            <h4>My Portfolio</h4>
-            <p>Welcome to my portfolio! Here you can find information about my work and projects.</p>
-            <h4>Projects</h4>
-            <ul>
-                <li>Project 1: A responsive website for a local business.</li>
-                <li>Project 2: A JavaScript game that I developed for fun.</li>
-                <li>Project 3: A blog platform built with HTML, CSS, and JavaScript.</li>
-            </ul>
-            <p>Feel free to explore my projects and contact me if you have any questions or opportunities to collaborate!
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-text-height" aria-hidden="true"></i> Font Size</h4>
+            <div class="font-size-control">
+                <button class="font-btn" id="fontDecrease" type="button" aria-label="Decrease font size">A-</button>
+                <span class="font-size-label" id="fontSizeLabel">100%</span>
+                <button class="font-btn" id="fontIncrease" type="button" aria-label="Increase font size">A+</button>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Animations</h4>
+            <label class="switch">
+                <input type="checkbox" id="animationsToggle" checked>
+                <span class="switch-track"><span class="switch-thumb"></span></span>
+            </label>
+        </div>
+
+        <button class="settings-reset" id="settingsReset" type="button">Reset to defaults</button>
+
+    </aside>
+
+    <!-- PORTFOLIO -->
+    <section class="portfolio-section" id="portfolio">
+
+        <div class="portfolio-header">
+
+            <h2 class="portfolio-title">
+                Portfolio <br>
+                Showcase
+            </h2>
+
+            <p class="portfolio-description">
+                These are some of my recent projects showcasing my creativity,
+                frontend development skills and passion for building modern websites.
             </p>
-            <div>
-                <div>
-                    <button>Art work</button>
-                    <button>Art direction</button>
-                    <button>Branding</button>
-                    <button>Desgin</button>
-                    <button>Web</button>
-                    <br><br><b></b>
-                </div>
-                <div>
-                    <img src="../desgin/desgin one.png" width="300" height="300">
-                </div>
-                <div>
-                    <img src="../desgin/desgin two.png" width="300" height="300">
-                </div>
-                <div>
-                    <img src="../desgin/desgin three.png" width="300" height="300">
-                </div>
-                <div>
-                    <img src="../desgin/desgin four.png" width="300" height="300">
-                </div>
-                <div>
-                    <img src="../desgin/desgin five.png" width="300" height="300">
-                </div>
-                <div>
-                    <img src="../desgin/desgin six.png" width="300" height="300">
-                </div>
-                <div>
-                    <img src="../desgin/desgin seven.png" width="300" height="300">
+
+            <div class="portfolio-divider"></div>
+
+        </div>
+
+        <div class="portfolio-filter">
+            <button class="portfolio-btn active">All Works</button>
+            <button class="portfolio-btn">Art Direction</button>
+            <button class="portfolio-btn">Branding</button>
+            <button class="portfolio-btn">Design</button>
+            <button class="portfolio-btn">Web</button>
+        </div>
+
+        <div class="portfolio-grid">
+
+            <!-- Project 1 -->
+            <div class="portfolio-item">
+                <img src="../desgin/desgin one.png" alt="CrispRun">
+
+                <div class="project-info">
+                    <h3>CrispRun</h3>
+
+                    <p>
+                        A modern fitness and running platform designed to help users
+                        monitor workouts, improve performance, and stay motivated.
+                    </p>
+
+                    <p class="tech">
+                        HTML • CSS • JavaScript • Responsive Design
+                    </p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/YOUR_USERNAME/CrispRun" target="_blank">
+                            <i class="fa-brands fa-github"></i>
+                            GitHub
+                        </a>
+
+                        <a href="#" target="_blank">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            Live Demo
+                        </a>
+                    </div>
                 </div>
             </div>
-        </main>
-        <!-- footer -->
-        <footer>
-            <section>
-                <div>
-                    <section>
-                <div>
-                    <h3>Victor's Portfolio</h3>
-                    <p>Passionate Web Designer & Developer creating modern and responsive websites.</p>
-                    <p>Email: ozoikevictor@gmail.com</p>
-                     <p>Phone: +2347057586651</p>
-                     <div><a href="https://facebook.com"><i class="fa-brands fa-facebook"></i></a></div>
-                     <div><a href="https://twitter.com"><i class="fa-brands fa-twitter"></i></a></div>
-                     <div><a href="https://instagram.com"><i class="fa-brands fa-instagram"></i></a></div>
-                     <div><a href="https://linkedin.com"><i class="fa-brands fa-linkedin"></i></a></div>
-                     <p>&copy; 2026 Victor. All Rights Reserved.</p>
+
+            <!-- Project 2 -->
+            <div class="portfolio-item">
+                <img src="../desgin/desgin two.png" alt="Quickbite">
+
+                <div class="project-info">
+                    <h3>Quickbite</h3>
+
+                    <p>
+                        A responsive online grocery and food ordering platform where
+                        customers can browse products, place orders, and track deliveries.
+                    </p>
+
+                    <p class="tech">
+                        HTML • CSS • JavaScript
+                    </p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/YOUR_USERNAME/Quickbite" target="_blank">
+                            <i class="fa-brands fa-github"></i>
+                            GitHub
+                        </a>
+
+                        <a href="#" target="_blank">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            Live Demo
+                        </a>
+                    </div>
                 </div>
-            </section>
-        </footer>
-    </body>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="portfolio-item">
+                <img src="../desgin/desgin three.png" alt="Portfolio">
+
+                <div class="project-info">
+                    <h3>Personal Portfolio</h3>
+
+                    <p>
+                        A professional portfolio website showcasing my skills,
+                        projects, services, resume, and contact information.
+                    </p>
+
+                    <p class="tech">
+                        HTML • CSS • JavaScript
+                    </p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/YOUR_USERNAME/MyPortfolio" target="_blank">
+                            <i class="fa-brands fa-github"></i>
+                            GitHub
+                        </a>
+
+                        <a href="#" target="_blank">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            Live Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    </main>
+    <footer class="site-footer">
+        <div class="footer-grid">
+
+            <div class="footer-col footer-about">
+                <div class="footer-brand-logo">
+                    <img src="../images/victor image.png" alt="Victor Logo">
+                    <span>Victor's Portfolio</span>
+                </div>
+                <p>Passionate web designer &amp; developer creating modern, responsive
+                    websites that help brands grow online.</p>
+                <div class="footer-socials">
+                    <a href="https://facebook.com" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="https://instagram.com" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://linkedin.com" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="skill.html">Skills</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="services.html#web-development">Web Development</a></li>
+                    <li><a href="services.html#web-design">Web Design</a></li>
+                    <li><a href="services.html#video-editing">Video Editing</a></li>
+                    <li><a href="services.html#app-development">App Development</a></li>
+                    <li><a href="services.html#seo-optimization">SEO Optimization</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul class="footer-contact">
+                    <li><i class="fa-solid fa-location-dot"></i> King Street, Melbourne Victoria</li>
+                    <li><i class="fa-solid fa-phone"></i> +234 907 612 4164</li>
+                    <li><i class="fa-regular fa-envelope"></i> ozoikevictor@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <p>&copy; 2026 Ozoike Victor. All Rights Reserved.</p>
+                <ul class="footer-bottom-links">
+                    <li><a href="#home">Privacy Policy</a></li>
+                    <li><a href="#home">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- FLOATING ACTION BUTTONS -->
+    <div class="fab-stack">
+        <a class="whatsapp-fab" href="https://wa.me/2347057586651" target="_blank" rel="noopener"
+            aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        </a>
+        <button class="back-to-top ripple-btn" id="backToTop" type="button" aria-label="Back to top">
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+        </button>
+    </div>
+    <script src="../script/script.js"></script>
+</body>
+
 </html>

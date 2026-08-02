@@ -1,95 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://kit.fontawesome.com/ea50b68e1f.js" crossorigin="anonymous"></script>
-        <title>My Services</title>
-        <link rel="icon" href="../images/victor image.png">
-    </head>
-    <body>
-        <!-- header -->
-        <header>
-            <section>
-                <div>
-                    <a href="../index.html">
-                        <img height="72" width="50" src="../images/victor image.png" />
-                    </a>
-                    <nav>
-                        <li>
-                        <li><a href="home.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="skill.html">Skills</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        </li>
-                    </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Apply saved theme, accent colour, font size, and animation
+        // preference immediately, before anything paints — avoids any
+        // flash of default settings on load.
+        (function () {
+            var root = document.documentElement;
+
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            if (theme === 'light') root.setAttribute('data-theme', 'light');
+
+            var savedAccent = localStorage.getItem('accentColor');
+            if (savedAccent) root.style.setProperty('--color-accent', savedAccent);
+
+            var savedFontScale = localStorage.getItem('fontScale');
+            if (savedFontScale) root.style.fontSize = savedFontScale + '%';
+
+            if (localStorage.getItem('animationsEnabled') === 'false') {
+                root.classList.add('no-animations');
+            }
+        })();
+    </script>
+    <script src="https://kit.fontawesome.com/ea50b68e1f.js" crossorigin="anonymous"></script>
+    <title>My Services</title>
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../images/victor image.png">
+</head>
+
+<body>
+    <!-- LOADING SCREEN -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="../images/victor image.png" alt="" class="loading-logo" aria-hidden="true">
+        <div class="loading-bar"><span></span></div>
+    </div>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="../images/victor image.png" alt="Victor Logo" class="logo-img">
+            </a>
+            <nav class="navbar">
+                <ul class="nav-links" id="navLinks">
+                    <li class="nav-item"><a href="home.html" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="skill.html" class="nav-link">Skills</a></li>
+                    <li class="nav-item"><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="settings-btn" id="settingsBtn" type="button" aria-label="Open settings" aria-expanded="false"
+                aria-controls="settingsPanel">
+                <i class="fa-solid fa-gear" aria-hidden="true"></i>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- SETTINGS OVERLAY + SIDEBAR -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+
+    <aside class="settings-panel" id="settingsPanel" aria-hidden="true" aria-label="Site settings">
+
+        <div class="settings-panel__header">
+            <h3>Settings</h3>
+            <button class="settings-panel__close" id="settingsClose" type="button" aria-label="Close settings">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> Dark / Light Mode</h4>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark and light mode"
+                aria-pressed="false">
+                <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                <i class="fa-solid fa-sun" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-palette" aria-hidden="true"></i> Accent Colour</h4>
+            <div class="accent-swatches" id="accentSwatches">
+                <button class="accent-swatch active" type="button" data-accent="#FF6C37" style="--swatch:#FF6C37"
+                    aria-label="Orange accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#4C6FFF" style="--swatch:#4C6FFF"
+                    aria-label="Blue accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#2ECC71" style="--swatch:#2ECC71"
+                    aria-label="Green accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#E64980" style="--swatch:#E64980"
+                    aria-label="Pink accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#9B59B6" style="--swatch:#9B59B6"
+                    aria-label="Purple accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#F1C40F" style="--swatch:#F1C40F"
+                    aria-label="Yellow accent"></button>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-text-height" aria-hidden="true"></i> Font Size</h4>
+            <div class="font-size-control">
+                <button class="font-btn" id="fontDecrease" type="button" aria-label="Decrease font size">A-</button>
+                <span class="font-size-label" id="fontSizeLabel">100%</span>
+                <button class="font-btn" id="fontIncrease" type="button" aria-label="Increase font size">A+</button>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Animations</h4>
+            <label class="switch">
+                <input type="checkbox" id="animationsToggle" checked>
+                <span class="switch-track"><span class="switch-thumb"></span></span>
+            </label>
+        </div>
+
+        <button class="settings-reset" id="settingsReset" type="button">Reset to defaults</button>
+
+    </aside>
+
+    <!-- main path -->
+    <main class="main-content">
+        <!-- SERVICES -->
+        <section class="services" id="services">
+            <div class="container services-container">
+
+                <div class="services-header">
+                    <span class="eyebrow">Services</span>
+                    <h2 class="services-title">My services</h2>
+                    <p class="services-description">As a web developer, I offer a range of services to help you
+                        establish and enhance your online
+                        presence. My expertise includes:</p>
                 </div>
-            </section>
-        </header>
-        <!-- main path -->
-        <main>
-            <section>
-                <div>
-                    <div>
-                        <h5>Services</h5>
-                        <a href="home.html">
-                         <P>Home</a> >> Services</P> 
-                    </div>
-                    <div>
-                        <div><i class="fa-brands fa-github"></i></div>
-                        <h4>Web Development</h4>
-                        <p>I create responsive and visually appealing websites using HTML, CSS, and JavaScript.</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-solid fa-circle-nodes"></i></div>
-                        <h4>Web Design</h4>
-                        <p>I design user-friendly interfaces that provide an engaging user experience.</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-solid fa-video"></i></div>
-                        <h4>Video Editing</h4>
-                        <p>I create engaging video content for your website and social media platforms.</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-regular fa-camera"></i></div>
-                        <h4>Photography</h4>
-                        <p>I capture stunning images to enhance your website and marketing materials.</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-brands fa-apple"></i></div>
-                        <h4>App Development</h4>
-                        <p>I create cross-platform mobile applications using modern frameworks and technologies.</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-brands fa-yoast"></i></div>
-                        <h4>SEO Optimization</h4>
-                        <p>I optimize your website for search engines to improve visibility and drive organic traffic.</p>
-                    </div>
+
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-brands fa-github icon"></i></div>
+                    <h3 class="service-title">Web Development</h3>
+                    <p class="service-text">I create responsive and visually appealing websites using HTML, CSS, and
+                        JavaScript.</p>
                 </div>
-            </section>
-        </main>
-        <!-- footer -->
-        <footer>
-          <section>
-            <div>
-                <section>
-                <div>
-                    <h3>Victor's Portfolio</h3>
-                    <p>Passionate Web Designer & Developer creating modern and responsive websites.</p>
-                    <p>Email: ozoikevictor@gmail.com</p>
-                     <p>Phone: +2347057586651</p>
-                     <div><a href="https://facebook.com"><i class="fa-brands fa-facebook"></i></a></div>
-                     <div><a href="https://twitter.com"><i class="fa-brands fa-twitter"></i></a></div>
-                     <div><a href="https://instagram.com"><i class="fa-brands fa-instagram"></i></a></div>
-                     <div><a href="https://linkedin.com"><i class="fa-brands fa-linkedin"></i></a></div>
-                     <p>&copy; 2026 Victor. All Rights Reserved.</p>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-solid fa-circle-nodes icon"></i></div>
+                    <h3 class="service-title">Web Design</h3>
+                    <p class="service-text">I design user-friendly interfaces that provide an engaging user experience.
+                    </p>
                 </div>
-            </section> 
-        </footer>
-    </body>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-solid fa-video icon"></i></div>
+                    <h3 class="service-title">Video Editing</h3>
+                    <p class="service-text">I create engaging video content for your website and social media platforms.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-regular fa-camera icon"></i></div>
+                    <h3 class="service-title">Photography</h3>
+                    <p class="service-text">I capture stunning images to enhance your website and marketing materials.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-brands fa-apple icon"></i></div>
+                    <h3 class="service-title">App Development</h3>
+                    <p class="service-text">I create cross-platform mobile applications using modern frameworks and
+                        technologies.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-brands fa-yoast icon"></i></div>
+                    <h3 class="service-title">SEO Optimization</h3>
+                    <p class="service-text">I optimize your website for search engines to improve visibility and drive
+                        organic traffic.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-grid">
+
+            <div class="footer-col footer-about">
+                <div class="footer-brand-logo">
+                    <img src="../images/victor image.png" alt="Victor Logo">
+                    <span>Victor's Portfolio</span>
+                </div>
+                <p>Passionate web designer &amp; developer creating modern, responsive
+                    websites that help brands grow online.</p>
+                <div class="footer-socials">
+                    <a href="https://facebook.com" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="https://instagram.com" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://linkedin.com" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="skill.html">Skills</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="services.html#web-development">Web Development</a></li>
+                    <li><a href="services.html#web-design">Web Design</a></li>
+                    <li><a href="services.html#video-editing">Video Editing</a></li>
+                    <li><a href="services.html#app-development">App Development</a></li>
+                    <li><a href="services.html#seo-optimization">SEO Optimization</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul class="footer-contact">
+                    <li><i class="fa-solid fa-location-dot"></i> King Street, Melbourne Victoria</li>
+                    <li><i class="fa-solid fa-phone"></i> +234 907 612 4164</li>
+                    <li><i class="fa-regular fa-envelope"></i> ozoikevictor@gmail.com</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <p>&copy; 2026 Ozoike Victor. All Rights Reserved.</p>
+                <ul class="footer-bottom-links">
+                    <li><a href="#home">Privacy Policy</a></li>
+                    <li><a href="#home">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- FLOATING ACTION BUTTONS -->
+    <div class="fab-stack">
+        <a class="whatsapp-fab" href="https://wa.me/2347057586651" target="_blank" rel="noopener"
+            aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        </a>
+        <button class="back-to-top ripple-btn" id="backToTop" type="button" aria-label="Back to top">
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+        </button>
+    </div>
+    <script src="../script/script.js"></script>
+</body>
 
 </html>

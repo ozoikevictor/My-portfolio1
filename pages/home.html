@@ -1,409 +1,921 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://kit.fontawesome.com/ea50b68e1f.js" crossorigin="anonymous"></script>
-        <title>Home - Ozoike Victor's Portfolio</title>
-        <link rel="icon" href="../images/victor image.png">
-    </head>
-    <body>
-        <!-- header path -->
-        <header>
-            <section>
-                <div>
-                    <a href="../index.html">
-                     <div><img height="72" width="50" src="../images/victor image.png" /></div>
-                    </a>
-                    <nav>
-                        <li>
-                            <li><a href="home.html">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="skill.html">Skills</a></li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="portfolio.html">Portfolio</a></li>
-                        </li>
-                    </nav>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Apply saved theme, accent colour, font size, and animation
+        // preference immediately, before anything paints — avoids any
+        // flash of default settings on load.
+        (function () {
+            var root = document.documentElement;
+
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            if (theme === 'light') root.setAttribute('data-theme', 'light');
+
+            var savedAccent = localStorage.getItem('accentColor');
+            if (savedAccent) root.style.setProperty('--color-accent', savedAccent);
+
+            var savedFontScale = localStorage.getItem('fontScale');
+            if (savedFontScale) root.style.fontSize = savedFontScale + '%';
+
+            if (localStorage.getItem('animationsEnabled') === 'false') {
+                root.classList.add('no-animations');
+            }
+        })();
+    </script>
+    <script src="https://kit.fontawesome.com/ea50b68e1f.js" crossorigin="anonymous"></script>
+    <title>Home - Ozoike Victor's Portfolio</title>
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../images/victor image.png">
+</head>
+
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="../images/victor image.png" alt="" class="loading-logo" aria-hidden="true">
+        <div class="loading-bar"><span></span></div>
+    </div>
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="../images/victor image.png" alt="Victor Logo" class="logo-img">
+            </a>
+            <nav class="navbar">
+                <ul class="nav-links" id="navLinks">
+                    <li class="nav-item"><a href="home.html" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="skill.html" class="nav-link">Skills</a></li>
+                    <li class="nav-item"><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="settings-btn" id="settingsBtn" type="button" aria-label="Open settings" aria-expanded="false"
+                aria-controls="settingsPanel">
+                <i class="fa-solid fa-gear" aria-hidden="true"></i>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- SETTINGS OVERLAY + SIDEBAR -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+
+    <aside class="settings-panel" id="settingsPanel" aria-hidden="true" aria-label="Site settings">
+
+        <div class="settings-panel__header">
+            <h3>Settings</h3>
+            <button class="settings-panel__close" id="settingsClose" type="button" aria-label="Close settings">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> Dark / Light Mode</h4>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark and light mode"
+                aria-pressed="false">
+                <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                <i class="fa-solid fa-sun" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-palette" aria-hidden="true"></i> Accent Colour</h4>
+            <div class="accent-swatches" id="accentSwatches">
+                <button class="accent-swatch active" type="button" data-accent="#FF6B35" style="--swatch:#FF6B35"
+                    aria-label="Orange accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#4C6FFF" style="--swatch:#4C6FFF"
+                    aria-label="Blue accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#2ECC71" style="--swatch:#2ECC71"
+                    aria-label="Green accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#E64980" style="--swatch:#E64980"
+                    aria-label="Pink accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#9B59B6" style="--swatch:#9B59B6"
+                    aria-label="Purple accent"></button>
+                <button class="accent-swatch" type="button" data-accent="#F1C40F" style="--swatch:#F1C40F"
+                    aria-label="Yellow accent"></button>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-text-height" aria-hidden="true"></i> Font Size</h4>
+            <div class="font-size-control">
+                <button class="font-btn" id="fontDecrease" type="button" aria-label="Decrease font size">A-</button>
+                <span class="font-size-label" id="fontSizeLabel">100%</span>
+                <button class="font-btn" id="fontIncrease" type="button" aria-label="Increase font size">A+</button>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h4><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Animations</h4>
+            <label class="switch">
+                <input type="checkbox" id="animationsToggle" checked>
+                <span class="switch-track"><span class="switch-thumb"></span></span>
+            </label>
+        </div>
+
+        <button class="settings-reset" id="settingsReset" type="button">Reset to defaults</button>
+
+    </aside>
+
+    <!-- main path -->
+    <main class="main-content">
+
+        <!-- HERO / HOME -->
+        <section class="about reveal fade-in">
+            <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
+            <div class="container about-container">
+
+                <div class="social-links">
+                    <a href="https://facebook.com" class="social-icon social-icon--facebook" aria-label="Facebook"><i
+                            class="fa-brands fa-facebook-f icon"></i></a>
+                    <a href="https://twitter.com" class="social-icon social-icon--twitter" aria-label="Twitter"><i
+                            class="fa-brands fa-twitter icon"></i></a>
+                    <a href="https://instagram.com" class="social-icon social-icon--instagram" aria-label="Instagram"><i
+                            class="fa-brands fa-instagram icon"></i></a>
+                    <a href="https://linkedin.com" class="social-icon social-icon--linkedin" aria-label="LinkedIn"><i
+                            class="fa-brands fa-linkedin-in icon"></i></a>
                 </div>
-            </section>
-        </header>
-        <!-- main path -->
-        <main>
-            <section>
-                <div>
-                    <div>
-                        <div><a href="https://facebook.com"><i class="fa-brands fa-facebook"></i></a></div>
-                        <div><a href="https://twitter.com"><i class="fa-brands fa-twitter"></i></a></div>
-                        <div><a href="https://instagram.com"><i class="fa-brands fa-instagram"></i></a></div>
-                        <div><a href="https://linkedin.com"><i class="fa-brands fa-linkedin"></i></a></div>
-                    </div>
-                    <div>
-                        <h3>I'm Ozoike Victor</h3>
-                        <p>Welcome to my portfolio website! I'm a passionate web developer with a knack for creating
-                            stunning
-                            and
-                            functional websites. With a strong foundation in HTML, CSS, and JavaScript, I specialize in
-                            crafting
-                            responsive and user-friendly web experiences. Whether it's building a sleek personal blog or
-                            developing
-                            a dynamic e-commerce site, I thrive on bringing ideas to life through code. Explore my projects
-                            and
-                            skills to see how I can help you achieve your web development goals!</p>
-                        <div>
-                            <button>View Profile</button>
-                            <a href="https://www.youtube.com/shorts/4WqyJXeiF9o "><i class="fa-brands fa-youtube"></i></a>
-                        </div>
-                    </div>
-                    <div>
-                        <img src="../images/IMG-20241230-WA0006.jpg" width="300" height="300">
+
+                <div class="about-content">
+                    <span class="eyebrow">About Me</span>
+                    <h1 class="about-title">
+                        I'm <span class="about-name">Ozoike Victor</span>
+                    </h1>
+
+                    <h3 class="typing-text">
+                        <span id="typing"></span><span class="cursor">|</span>
+                    </h3>
+                    <p class="about-description">
+                        Welcome to my portfolio website! I'm a passionate web developer
+                        with a knack for creating stunning and functional websites.
+                        With a strong foundation in HTML, CSS, and JavaScript,
+                        I specialize in crafting responsive and user-friendly web experiences.
+                    </p>
+                    <div class="about-buttons">
+                        <a href="../Assets/cv/Victorcv.pdf" class="btn-primary ripple-btn" download>
+                            <i class="fa-solid fa-download"></i>
+                            Download CV
+                        </a>
+                        <a href="https://www.youtube.com/shorts/4WqyJXeiF9o" class="video-btn"
+                            aria-label="Watch video"><i class="fa-brands fa-youtube icon"></i></a>
                     </div>
                 </div>
-            </section>
-            <section>
-                <div>
-                    <div>
-                        <h5>Services</h5>
-                        <h3>My services</h3>
-                        <p>As a web developer, I offer a range of services to help you establish and enhance your online
-                            presence. My expertise includes:</p>
+
+                <div class="about-image">
+                    <img src="../images/WhatsApp Image 2026-07-05 at 7.47.36 PM.jpeg" alt="Ozoike Victor"
+                        class="about-img">
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section class="services reveal slide-up">
+            <div class="container services-container">
+
+                <div class="services-header">
+                    <span class="eyebrow">Services</span>
+                    <h2 class="services-title">My services</h2>
+                    <p class="services-description">As a web developer, I offer a range of services to help you
+                        establish and enhance your online
+                        presence. My expertise includes:</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-brands fa-github icon"></i></div>
+                    <h3 class="service-title">Web Development</h3>
+                    <p class="service-text">I create responsive and visually appealing websites using HTML, CSS, and
+                        JavaScript.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-solid fa-circle-nodes icon"></i></div>
+                    <h3 class="service-title">Web Design</h3>
+                    <p class="service-text">I design user-friendly interfaces that provide an engaging user experience.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-solid fa-video icon"></i></div>
+                    <h3 class="service-title">Video Editing</h3>
+                    <p class="service-text">I create engaging video content for your website and social media platforms.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-regular fa-camera icon"></i></div>
+                    <h3 class="service-title">Photography</h3>
+                    <p class="service-text">I capture stunning images to enhance your website and marketing materials.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-brands fa-apple icon"></i></div>
+                    <h3 class="service-title">App Development</h3>
+                    <p class="service-text">I create cross-platform mobile applications using modern frameworks and
+                        technologies.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fa-brands fa-yoast icon"></i></div>
+                    <h3 class="service-title">SEO Optimization</h3>
+                    <p class="service-text">I optimize your website for search engines to improve visibility and drive
+                        organic traffic.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT (bio detail) -->
+        <section class="about-section reveal slide-left">
+
+            <div class="about-section__header">
+                <h2 class="about-section__title">About Me</h2>
+
+                <p class="about-section__intro">
+                    I'm Victor, a Frontend Web Developer and Computer Science student. I enjoy creating modern,
+                    responsive, and user-friendly websites using HTML, CSS, JavaScript, and other web technologies.
+                </p>
+
+                <div class="about-section__divider"></div>
+            </div>
+
+            <div class="about-section__body">
+
+                <div class="about-section__photo">
+                    <img src="../images/WhatsApp Image 2026-07-05 at 7.47.36 PM.jpeg" alt="Portrait of Ozoike Victor">
+                </div>
+
+                <div class="about-section__text">
+
+                    <h3 class="about-section__subtitle">Hi There</h3>
+
+                    <p class="about-section__paragraph">
+                        I'm a dedicated web developer with a passion for creating innovative and user-friendly websites.
+                        With a strong background in HTML, CSS, and JavaScript, I specialize in building responsive and
+                        visually appealing web applications. I enjoy collaborating with clients to bring their ideas to
+                        life and am always eager to learn new technologies to stay at the forefront of the industry.
+                    </p>
+
+                    <p class="about-section__paragraph">
+                        My journey in web development started when I was in college, and since then, I've been
+                        constantly learning and improving my skills. I take pride in delivering high-quality work that
+                        meets the unique needs of each client. Whether it's a personal portfolio, a business website, or
+                        an e-commerce platform, I strive to create digital experiences that leave a lasting impression.
+                    </p>
+
+                    <div class="about-section__details">
+
+                        <div class="about-section__item">
+                            <h4 class="about-section__label">Name:</h4>
+                            <p class="about-section__value">Ozoike Victor</p>
+                        </div>
+
+                        <div class="about-section__item">
+                            <h4 class="about-section__label">Phone:</h4>
+                            <p class="about-section__value">+234 907 612 4164</p>
+                        </div>
+
+                        <div class="about-section__item">
+                            <h4 class="about-section__label">Email:</h4>
+                            <p class="about-section__value">ozoikevictor@gmail.com</p>
+                        </div>
+
+                        <div class="about-section__item">
+                            <h4 class="about-section__label">LinkedIn:</h4>
+                            <p class="about-section__value">Ozoike_Victor</p>
+                        </div>
+
                     </div>
-                    <div>
-                        <div><i class="fa-brands fa-github"></i></div>
-                        <h4>Web Development</h4>
-                        <p>I create responsive and visually appealing websites using HTML, CSS, and JavaScript.</p>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section class="skills-section reveal zoom-in">
+
+            <div class="skills-left">
+
+                <span class="eyebrow">I'm expert on</span>
+
+                <h2 class="skills-title">
+                    Let's Work <br>
+                    Together
+                </h2>
+
+                <p class="skills-text">
+                    I'm a passionate web developer with a knack for creating stunning and
+                    functional websites. With a strong foundation in HTML, CSS and
+                    JavaScript, I specialize in crafting responsive and user-friendly web
+                    experiences. Whether it's building a sleek personal blog or developing
+                    a dynamic e-commerce site, I thrive on bringing ideas to life through
+                    code.
+                </p>
+
+                <a href="../pages/Hire.html" class="hire-btn ripple-btn">Hire Me Now</a>
+
+            </div>
+
+            <div class="skills-right">
+
+                <div class="skill">
+                    <div class="skill-info">
+                        <span>Node JS</span>
+                        <span class="percent">88%</span>
                     </div>
-                    <div>
-                        <div><i class="fa-solid fa-circle-nodes"></i></div>
-                        <h4>Web Design</h4>
-                        <p>I design user-friendly interfaces that provide an engaging user experience.</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-solid fa-video"></i></div>
-                        <h4>Video Editing</h4>
-                        <p>I create engaging video content for your website and social media platforms.</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-regular fa-camera"></i></div>
-                        <h4>Photography</h4>
-                        <p>I capture stunning images to enhance your website and marketing materials.</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-brands fa-apple"></i></div>
-                        <h4>App Development</h4>
-                        <p>I create cross-platform mobile applications using modern frameworks and technologies.</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-brands fa-yoast"></i></div>
-                        <h4>SEO Optimization</h4>
-                        <p>I optimize your website for search engines to improve visibility and drive organic traffic.</p>
+                    <div class="progress">
+                        <div class="progress-bar node"></div>
                     </div>
                 </div>
-            </section>
-            <section>
-                <div>
-                    <div>
-                        <h3>About Me</h3>
-                        <p>Hi there! I'm Ozoike Victor, a passionate web developer based in Nigeria. I have a strong
-                            background
-                            in creating modern, responsive websites and applications. My journey in web development started
-                            when
-                            I was in college, and since then, I've been constantly learning and improving my skills.</p>
-                        <hr>
-                        <div>
-                            <img src="../images/IMG-20241230-WA0006.jpg" width="300" height="300">
-                        </div>
-                        <div>
-                            <h4>Hi theme</h4>
-                            <p>I'm a dedicated web developer with a passion for creating innovative and user-friendly websites.
-                                With a strong background in HTML, CSS, and JavaScript, I specialize in building responsive and
-                                visually appealing web applications. I enjoy collaborating with clients to bring their ideas to
-                                life and am always eager to learn new technologies to stay at the forefront of the industry.</p>
+
+                <div class="skill">
+                    <div class="skill-info">
+                        <span>Python</span>
+                        <span class="percent">81%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar python"></div>
+                    </div>
+                </div>
+
+                <div class="skill">
+                    <div class="skill-info">
+                        <span>Laravel</span>
+                        <span class="percent">70%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar laravel"></div>
+                    </div>
+                </div>
+
+                <div class="skill">
+                    <div class="skill-info">
+                        <span>SEO</span>
+                        <span class="percent">90%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar seo"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PORTFOLIO -->
+        <section class="portfolio-section reveal slide-right">
+
+            <div class="portfolio-header">
+
+                <h2 class="portfolio-title">
+                    Portfolio <br>
+                    Showcase
+                </h2>
+
+                <p class="portfolio-description">
+                    These are some of my recent projects showcasing my creativity,
+                    frontend development skills and passion for building modern websites.
+                </p>
+
+                <div class="portfolio-divider"></div>
+
+            </div>
+
+            <div class="portfolio-filter">
+                <div class="portfolio-filter">
+
+                    <button class="portfolio-btn active" data-filter="all">
+                        All Works
+                    </button>
+
+                    <button class="portfolio-btn" data-filter="art">
+                        Art Direction
+                    </button>
+
+                    <button class="portfolio-btn" data-filter="branding">
+                        Branding
+                    </button>
+
+                    <button class="portfolio-btn" data-filter="design">
+                        Design
+                    </button>
+
+                    <button class="portfolio-btn" data-filter="web">
+                        Web
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="portfolio-grid">
+
+                <!-- Project 1 -->
+                <div class="portfolio-item" data-category="web">
+                    <img src="../desgin/desgin one.png" alt="CrispRun">
+
+                    <div class="project-info">
+                        <h3>CrispRun</h3>
+
+                        <p>
+                            A modern fitness and running platform designed to help users
+                            monitor workouts, improve performance, and stay motivated.
+                        </p>
+
+                        <p class="tech">
+                            HTML • CSS • JavaScript • Responsive Design
+                        </p>
+
+                        <div class="project-links">
+                            <a href="https://github.com/YOUR_USERNAME/CrispRun" target="_blank">
+                                <i class="fa-brands fa-github"></i>
+                                GitHub
+                            </a>
+
+                            <a href="#" target="_blank">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                Live Demo
+                            </a>
                         </div>
                     </div>
-                    <div>
-                        <div>
-                            <h3>Name:</h3>
-                            <p>Ozoike Victor</p>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="portfolio-item" data-category="design">
+                    <img src="../desgin/desgin two.png" alt="Quickbite">
+
+                    <div class="project-info">
+                        <h3>Quickbite</h3>
+
+                        <p>
+                            A responsive online grocery and food ordering platform where
+                            customers can browse products, place orders, and track deliveries.
+                        </p>
+
+                        <p class="tech">
+                            HTML • CSS • JavaScript
+                        </p>
+
+                        <div class="project-links">
+                            <a href="https://github.com/YOUR_USERNAME/Quickbite" target="_blank">
+                                <i class="fa-brands fa-github"></i>
+                                GitHub
+                            </a>
+
+                            <a href="#" target="_blank">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                Live Demo
+                            </a>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="portfolio-item" data-category="branding">
+                    <img src="../desgin/desgin three.png" alt="Portfolio">
+
+                    <div class="project-info">
+                        <h3>Personal Portfolio</h3>
+
+                        <p>
+                            A professional portfolio website showcasing my skills,
+                            projects, services, resume, and contact information.
+                        </p>
+
+                        <p class="tech">
+                            HTML • CSS • JavaScript
+                        </p>
+
+                        <div class="project-links">
+                            <a href="https://github.com/YOUR_USERNAME/MyPortfolio" target="_blank">
+                                <i class="fa-brands fa-github"></i>
+                                GitHub
+                            </a>
+
+                            <a href="#" target="_blank">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PRICING -->
+        <section class="pricing-section">
+
+            <div class="pricing-header">
+                <span class="eyebrow">Choose a plan</span>
+                <h2 class="pricing-title">Pricing Plan</h2>
+
+                <p class="pricing-description">
+                    Choose the package that best suits your project.
+                    Every plan is designed to deliver quality,
+                    performance and value.
+                </p>
+
+                <div class="pricing-divider"></div>
+            </div>
+
+            <div class="pricing-container">
+
+                <!-- Basic -->
+                <div class="pricing-card">
+
+                    <h3>Basic</h3>
+
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">50</span>
+                    </div>
+
+                    <ul>
+                        <li>5GB Storage Space</li>
+                        <li>20GB Monthly Bandwidth</li>
+                        <li>MySQL Database</li>
+                        <li>100 Email Accounts</li>
+                        <li>10 Free Domain Names</li>
+                    </ul>
+
+                    <button class="pricing-btn buy-btn ripple-btn" data-plan="Basic" data-price="50">
+                        Purchase
+                    </button>
+
+                </div>
+
+                <!-- Standard -->
+                <div class="pricing-card active">
+
+                    <div class="recommended">
+                        Recommended
+                    </div>
+
+                    <h3>Standard</h3>
+
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">80</span>
+                    </div>
+
+                    <ul>
+                        <li>10GB Storage Space</li>
+                        <li>Unlimited Bandwidth</li>
+                        <li>MySQL Database</li>
+                        <li>Unlimited Email Accounts</li>
+                        <li>20 Free Domain Names</li>
+                    </ul>
+
+                    <button class="pricing-btn active-btn buy-btn ripple-btn" data-plan="Standard" data-price="80">
+                        Purchase
+                    </button>
+
+                </div>
+
+                <!-- Premium -->
+                <div class="pricing-card">
+
+                    <h3>Premium</h3>
+
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">160</span>
+                    </div>
+
+                    <ul>
+                        <li>Unlimited Storage</li>
+                        <li>Unlimited Monthly Bandwidth</li>
+                        <li>Unlimited MySQL Databases</li>
+                        <li>Unlimited Email Accounts</li>
+                        <li>Unlimited Domain Names</li>
+                    </ul>
+
+                    <button class="pricing-btn buy-btn ripple-btn" data-plan="Premium" data-price="160">
+                        Purchase
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- STATS -->
+        <section class="stats-section reveal zoom-in">
+            <div class="stats-container">
+
+                <div class="stats-card" aria-label="47 Clients">
+                    <div class="stats-icon"><i class="fa-solid fa-people-group"></i></div>
+                    <h3 class="stats-number" data-target="47">0</h3>
+                    <p class="stats-title">Clients</p>
+                </div>
+
+                <div class="stats-card" aria-label="64 Projects">
+                    <div class="stats-icon"><i class="fa-solid fa-cube"></i></div>
+                    <h3 class="stats-number" data-target="64">0</h3>
+                    <p class="stats-title">Projects</p>
+                </div>
+
+                <div class="stats-card" aria-label="16 Awards">
+                    <div class="stats-icon"><i class="fa-regular fa-gem"></i></div>
+                    <h3 class="stats-number" data-target="16">0</h3>
+                    <p class="stats-title">Awards</p>
+                </div>
+
+                <div class="stats-card" aria-label="10 Years Experience">
+                    <div class="stats-icon"><i class="fa-brands fa-github"></i></div>
+                    <h3 class="stats-number" data-target="10">0</h3>
+                    <p class="stats-title">Years Experience</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TESTIMONIAL -->
+        <section class="testimonial-section reveal slide-up">
+            <div class="testimonial-container">
+
+                <div class="testimonial-content">
+                    <span class="testimonial-label">Our Testimonials</span>
+                    <h2>Happy Client Says</h2>
+                    <p>
+                        Working with Victor was one of the best decisions for our brand.
+                        The portfolio design was modern, responsive, and professionally
+                        built. Every section was carefully arranged to give our visitors
+                        a smooth and attractive experience across all devices.
+                    </p>
+                    <p>
+                        His creativity, attention to detail, and fast delivery made the
+                        entire project stress-free. We highly recommend Victor to anyone
+                        looking for a clean and professional website that truly stands out.
+                    </p>
+                    <a href="#portfolio" class="learn-btn ripple-btn">Learn More</a>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote">&#10077;</div>
+                    <p class="testimonial-text">
+                        In promotion and advertising, a testimonial consists of a
+                        person's written or spoken statement extolling the virtues
+                        of a product or service.
+                    </p>
+                    <div class="testimonial-client">
+                        <img src="../images/my1pic.jpeg" alt="Client portrait">
                         <div>
-                            <h3>Email:</h3>
+                            <h4>Adaeze Nwosu</h4>
+                            <span>CEO, Digital Agency</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CLIENTS -->
+        <section class="clients-section reveal fade-in">
+            <div class="clients-container">
+                <div class="client-logo">
+                    <img decoding="async" src="https://themebing.com/wp/amike/wp-content/uploads/2019/11/logo-01-w.png"
+                        alt="client logo">
+                </div>
+                <div class="client-logo">
+                    <img decoding="async" src="https://themebing.com/wp/amike/wp-content/uploads/2019/11/logo-04-w.png"
+                        alt="client logo">
+                </div>
+                <div class="client-logo">
+                    <img decoding="async" src="https://themebing.com/wp/amike/wp-content/uploads/2019/11/logo-03-w.png"
+                        alt="client logo">
+                </div>
+                <div class="client-logo">
+                    <img decoding="async" src="https://themebing.com/wp/amike/wp-content/uploads/2019/11/logo-02-w.png"
+                        alt="client logo">
+                </div>
+                <div class="client-logo">
+                    <img decoding="async" src="https://themebing.com/wp/amike/wp-content/uploads/2019/11/logo-05-w.png"
+                        alt="client logo">
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG -->
+        <section class="blog reveal slide-left">
+            <div class="container">
+
+                <div class="blog-header">
+                    <span class="blog-eyebrow">Latest post</span>
+                    <h2 class="blog-heading">Latest blog</h2>
+                    <p class="blog-intro">
+                        I create modern and responsive websites that help businesses and individuals
+                        grow online. My goal is to design clean, attractive, and user-friendly web
+                        experiences.
+                    </p>
+                </div>
+
+                <div class="blog-container">
+
+                    <div class="blog-card">
+                        <img src="https://themebing.com/wp/amike/wp-content/uploads/2019/10/blog-2-1280x600.jpg" alt="Blog cover">
+                        <div class="blog-info">
+                            <span><i class="fa-regular fa-user"></i> By admin</span>
+                            <span><i class="fa-regular fa-calendar"></i> Tuesday</span>
+                            <span><i class="fa-regular fa-comments"></i> 3</span>
+                        </div>
+                        <h3>Ten Secrets You Will Not Want To Know</h3>
+                        <a href="ten-secrets-you-eill-not-want-to-known.html">
+                            Read More <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="blog-card">
+                        <img src="https://themebing.com/wp/amike/wp-content/uploads/2019/05/blog-1280x720.jpg" alt="Blog cover">
+                        <div class="blog-info">
+                            <span><i class="fa-regular fa-user"></i> By admin</span>
+                            <span><i class="fa-regular fa-calendar"></i> Wednesday</span>
+                            <span><i class="fa-regular fa-comments"></i> 3</span>
+                        </div>
+                        <h3>You've gotta dance like there's nobody watching</h3>
+                        <a href="you've-gotta-dance-there's-nobody-watching.html">
+                            Read More <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="blog-card">
+                        <img src="https://themebing.com/wp/amike/wp-content/uploads/2019/06/blog-1.jpg" alt="Blog cover">
+                        <div class="blog-info">
+                            <span><i class="fa-regular fa-user"></i> By admin</span>
+                            <span><i class="fa-regular fa-calendar"></i> Saturday</span>
+                            <span><i class="fa-regular fa-comments"></i> 3</span>
+                        </div>
+                        <h3>I must explain to you how all this mistaken idea</h3>
+                        <a href="i-must-explain-to-you-how-all-this-mistaken-idea.html">
+                            Read More <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="contact reveal scale-in">
+            <div class="container">
+
+                <div class="contact-header">
+                    <span class="contact-eyebrow">Have any query?</span>
+                    <h2 class="contact-heading">Contact Me</h2>
+                    <p class="contact-intro">
+                        Have a project in mind or just want to say hello? Fill out the form
+                        below and I'll get back to you as soon as possible.
+                    </p>
+                </div>
+
+                <div class="contact-info">
+
+                    <div class="info-box">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <h3>Locate us</h3>
+                            <p>King Street, Melbourne Victoria</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <h3>Give us a call</h3>
+                            <p>Office: +234 907 612 4164</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fa-regular fa-envelope"></i>
+                        <div>
+                            <h3>Get in online</h3>
                             <p>ozoikevictor@gmail.com</p>
                         </div>
                     </div>
+
                 </div>
-            </section>
-            <section>
-                <div>
-                    <span>I'M EXPERT</span>
-                    <h2>Let's Work Together</h2>
-                    <p>I'm a passionate web developer with a knack for creating stunning and functional websites. With a
-                        strong
-                        foundation in HTML, CSS, and JavaScript, I specialize in crafting responsive and user-friendly web
-                        experiences. Whether it's building a sleek personal blog or developing a dynamic e-commerce site, I
-                        thrive on bringing ideas to life through code. Explore my projects and skills to see how I can help
-                        you achieve your web development goals!</p>
-                    <div>
-                        <button>Hire Me</button>
+
+                <form class="contact-form" id="contactForm" novalidate>
+                    <div class="form-field">
+                        <input type="text" id="cf-name" name="name" placeholder="Your Name" required>
+                        <span class="form-error" id="cf-name-error"></span>
                     </div>
-                    <div>
-                        <p>Node js ---------------------------[85%]</p>
-                        <p>Python ------------------------[80%] </p>
-                        <p>laravel -----------------------[80%]</p>
+                    <div class="form-field">
+                        <input type="email" id="cf-email" name="email" placeholder="Your Email" required>
+                        <span class="form-error" id="cf-email-error"></span>
                     </div>
-                </div>
-            </section>
-            <section>
-                <div>
-                    <h4>Portfolio</h4>
-                    <h4>Show case</h4>
-                    <p>This are some of the drop list of my work</p>
-                </div>
-                <div>
-                    <button>Art work</button>
-                    <button>Branding</button>
-                    <button>Art direction</button>
-                    <button>Branding</button>
-                    <button>Desgin</button>
-                    <button>Web</button>
-                    <br>
-                    <div>
-                        <img src="../desgin/desgin one.png" width="300" height="300">
+                    <div class="form-field full">
+                        <input type="text" id="cf-subject" name="subject" placeholder="Your Subject">
                     </div>
-                    <div>
-                        <img src="../desgin/desgin two.png" width="300" height="300">
+                    <div class="form-field full">
+                        <textarea class="full" id="cf-message" name="message" rows="7" placeholder="Your Message"
+                            required></textarea>
+                        <span class="form-error" id="cf-message-error"></span>
                     </div>
-                    <div>
-                        <img src="../desgin/desgin three.png" width="300" height="300">
-                    </div>
-                    <div>
-                        <img src="../desgin/desgin four.png" width="300" height="300">
-                    </div>
-                    <div>
-                        <img src="../desgin/desgin five.png" width="300" height="300">
-                    </div>
-                    <div>
-                        <img src="../desgin/desgin six.png" width="300" height="300">
-                    </div>
-                    <div>
-                        <img src="../desgin/desgin seven.png" width="300" height="300">
-                    </div>
-                </div>
-            </section>
-            <section>
-                <div>
-                    <h4>CHOOES A PLAN</h4>
-                    <h1>Priceing plan</h1>
-                    <div>
-                        <h4>Basic</h4>
-                        <p>$50</p>
-                        <p>5GB Storage</p>
-                        <hr>
-                        <p>20GB Monthly Bandwitch</p>
-                        <hr>
-                        <p>My SQL Databsse</p>
-                        <hr>
-                        <p>100 Email Account</p>
-                        <hr>
-                        <p>10 free Domain Name</p>
-                        <hr>
-                        <button>purchase</button>
-                        <hr>
-                    </div>
-                    <div>
-                        <h4>Stander</h4>
-                        <p>$80</p>
-                        <p>5GB Storage</p>
-                        <hr>
-                        <p>20GB Monthly Bandwitch</p>
-                        <hr>
-                        <p>My SQL Databsse</p>
-                        <hr>
-                        <p>100 Email Account</p>
-                        <hr>
-                        <p>10 free Domain Name</p>
-                        <hr>
-                        <button>purchase</button>
-                        <hr>
-                    </div>
-                    <div>
-                        <h4>Premium</h4>
-                        <p>$160</p>
-                        <p>5GB Storage</p>
-                        <hr>
-                        <p>20GB Monthly Bandwitch</p>
-                        <hr>
-                        <p>My SQL Databsse</p>
-                        <hr>
-                        <p>100 Email Account</p>
-                        <hr>
-                        <p>10 free Domain Name</p>
-                        <hr>
-                        <button>purchase</button>
-                        <hr>
-                    </div>
-                </div>
-            </section>
-            <section>
-                <div>
-                    <div><i class="fa-solid fa-people-roof"></i></div>
-                    <p>45</p>
-                    <div>
-                        <p>Client</p>
-                    </div>
-                    <div><i class="fa-solid fa-circle-nodes"></i></div>
-                    <p>65</p>
-                    <div>
-                        <p>Project</p>
-                    </div>
-                    <div><i class="fa-solid fa-award"></i></div>
-                    <p>16</p>
-                    <div>
-                        <p>Awards</p>
-                    </div>
-                    <div><i class="fa-brands fa-github"></i></div>
-                    <P>10</P>
-                    <div>
-                        <p>Years Experinces</p>
-                    </div>
-                </div>
-            </section>
-            <section>
-                <div>
-                    <h4>OUR TESTIMONIALS</h4>
-                    <h2>Happy Client Says</h2>
-                    <p>Work with victor was one of the best decision for our brand. The portfolio design was
-                        modern,responsive and professionally built every section was carefully arranged to give our visitor
-                        a smooth and attractive experience across all devices.</p>
-                    <p>His creativity, attentin to detail, and fast delivery made the entire project stress-free. we highly
-                        recommend victor to anyone looking for clean and professional website desgin that truly stands out.
+                    <button type="submit" class="ripple-btn">Send Message</button>
+                    <p class="form-success" id="formSuccess" role="status" aria-live="polite">
+                        <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+                        Thanks! Your message has been noted — I'll get back to you soon.
                     </p>
-                    <div>
-                        <a href="home.html">
-                            <button>Learn More</button>
-                        </a>
-                    </div>
-                    <div>
-                        <h1>"</h1>
-                        <p>"In promotion and of advertising testimonial show consis of person's written orsoken statenment
-                            extollig the virtue" </p>
-                        <i class="fa-regular fa-face-meh"></i>
-                        <i class="fa-regular fa-face-meh"></i>
-                        <i class="fa-regular fa-face-meh"></i>
-                    </div>
+                </form>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- footer path -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+
+            <div class="footer-col footer-about">
+                <div class="footer-brand-logo">
+                    <img src="../images/victor image.png" alt="Victor Logo">
+                    <span>Victor's Portfolio</span>
                 </div>
-            </section>
-            <section>
-                <div>
-                    <div>
-                        <img src="../images/icon 1 PM (1).png" width="300">
-                    </div>
-                    <div>
-                        <img src="../images/icon 2 PM.png" width="300">
-                    </div>
-                    <div>
-                        <img src="../images/icon 1 PM (1).png" width="300">
-                    </div>
-                    <div>
-                        <img src="../images/icon 2 PM.png" width="300">
-                    </div>
+                <p>Passionate web designer &amp; developer creating modern, responsive
+                    websites that help brands grow online.</p>
+                <div class="footer-socials">
+                    <a href="https://facebook.com" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="https://instagram.com" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://linkedin.com" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
-            </section>
-            <section>
-                <div>
-                    <h5>Lastest Blog</h5>
-                    <h3>Lastest blog</h3>
-                    <p>I create modern and responsive website that help businsses and indviduals grow online.My goal is to desgin clean, attractive, and  user-friendly web experience that stand out and leave a lasting impression on visitors. </p>
-                    <div>
-                        <div><img src="../desgin/Screenshot 2026-05-27 232450.png" width="300"></div>
-                        <i class="fa-regular fa-address-card"></i>
-                        <p>By admin</p>
-                        <i class="fa-regular fa-calendar"></i>
-                        <p>Tuseday</p>
-                        <i class="fa-regular fa-calendar"></i>
-                        <p>3</p>
-                        <p>Ten secrets you will not want to know</p>
-                        <a href="Ten secrets you eill not want to known.html">
-                            Read more  <i class="fa-solid fa-right-long"></i>
-                        </a>
-                        <div><img src="../desgin/d3.png" width="300"></div>
-                        <i class="fa-regular fa-address-card"></i>
-                        <p>By admin</p>
-                        <i class="fa-regular fa-calendar"></i>
-                        <p>Monday</p>
-                        <i class="fa-regular fa-calendar"></i>
-                        <p>3</p>
-                        <p>You've gotta dance there's nobody watching</p>
-                        <a href="You've gotta dance there's nobody watching.html">
-                            Read more  <i class="fa-solid fa-right-long"></i>
-                        </a>
-                        <div><img src="../desgin/d2.png" width="300"></div>
-                        <i class="fa-regular fa-address-card"></i>
-                        <p>By admin</p>
-                        <i class="fa-regular fa-calendar"></i>
-                        <p>saturday</p>
-                        <i class="fa-regular fa-calendar"></i>
-                        <p>3</p>
-                        <p>I must explain to you how all this mistaken idea</p>
-                        <a href="I must explain to you how all this mistaken idea.html">
-                            Read more  <i class="fa-solid fa-right-long"></i>
-                        </a> 
-                    </div>
-                </div>
-            </section>
-            <section>
-             <div>
-                    <div>
-                        <div><i class="fa-solid fa-location-arrow"></i></div>
-                        <h3>Locate us</h3>
-                        <p>King Street, Melbourne Victoria</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-solid fa-phone"></i></div>
-                        <h3>Give us a call</h3>
-                        <p>09076124164</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-solid fa-inbox"></i></div>
-                        <h3>Git it online</h3>
-                        <P>ozoikevictor@gmail.com</P>
-                    </div>
-                    <form>
-                        <div>
-                            <label>Your name:</label><br>
-                            <input type="text" placeholder="Enter your name"><br><br>
-                        </div>
-                        <div>
-                            <label>Your email</label><br>
-                            <input type="text" placeholder="Enter your email"><br><br>
-                        </div>
-                        <div>
-                            <input type="text" placeholder="Your subject"><br><br>
-                        </div>
-                        <div>
-                            <input type="text" placeholder="your message"><br><br>
-                        </div>
-                        <button>Send a message</button>
-                    </form>
-                </div>   
-            </section>
-        </main>
-        <!-- footer path -->
-        <footer>
-            <section>
-                <div>
-                    <h3>Victor's Portfolio</h3>
-                    <p>Passionate Web Designer & Developer creating modern and responsive websites.</p>
-                    <p>Email: ozoikevictor@gmail.com</p>
-                     <p>Phone: +2347057586651</p>
-                     <div><a href="https://facebook.com"><i class="fa-brands fa-facebook"></i></a></div>
-                     <div><a href="https://twitter.com"><i class="fa-brands fa-twitter"></i></a></div>
-                     <div><a href="https://instagram.com"><i class="fa-brands fa-instagram"></i></a></div>
-                     <div><a href="https://linkedin.com"><i class="fa-brands fa-linkedin"></i></a></div>
-                     <p>&copy; 2026 Victor. All Rights Reserved.</p>
-                </div>
-            </section>
-        </footer>
-    </body>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="skill.html">Skills</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="services.html#web-development">Web Development</a></li>
+                    <li><a href="services.html#web-design">Web Design</a></li>
+                    <li><a href="services.html#video-editing">Video Editing</a></li>
+                    <li><a href="services.html#app-development">App Development</a></li>
+                    <li><a href="services.html#seo-optimization">SEO Optimization</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul class="footer-contact">
+                    <li><i class="fa-solid fa-location-dot"></i> King Street, Melbourne Victoria</li>
+                    <li><i class="fa-solid fa-phone"></i> +234 907 612 4164</li>
+                    <li><i class="fa-regular fa-envelope"></i> ozoikevictor@gmail.com</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <p>&copy; 2026 Ozoike Victor. All Rights Reserved.</p>
+                <ul class="footer-bottom-links">
+                    <li><a href="#home">Privacy Policy</a></li>
+                    <li><a href="#home">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING ACTION BUTTONS -->
+    <div class="fab-stack">
+        <a class="whatsapp-fab" href="https://wa.me/2347057586651" target="_blank" rel="noopener"
+            aria-label="Chat on WhatsApp">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        </a>
+        <button class="back-to-top ripple-btn" id="backToTop" type="button" aria-label="Back to top">
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <script src="../script/script.js"></script>
+</body>
+
 </html>
